@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { User } from './models/user';
-import { NbAuthService, NbAuthResult, NbLogoutComponent } from '@nebular/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { map, tap, mergeMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { NbAuthResult, NbAuthService } from '@nebular/auth';
 import { BehaviorSubject } from 'rxjs';
+import { mergeMap, tap } from 'rxjs/operators';
+import { User } from './models/user';
+
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   private _token = '';
   private _user: User;
+  private _tokenExpiry: Date;
   private $isLoggedIn = new BehaviorSubject<boolean>(false);
   private $userChanged = new BehaviorSubject<User>(undefined);
 
@@ -33,6 +35,16 @@ export class AuthService {
     this.$userChanged.next(user);
   }
 
+  isTokenExpired() {
+    if (!this._token) {
+      return false;
+    }
+    if (this._tokenExpiry === undefined) {
+      return true;
+    }
+    return !(this._tokenExpiry.valueOf() > new Date().valueOf());
+  }
+
   get isLoggedIn() {
     return this.$isLoggedIn.asObservable();
   }
@@ -47,7 +59,17 @@ export class AuthService {
     this.nbAuthService.isAuthenticated().subscribe(res => console.log(res));
     return this.nbAuthService.authenticate('google').pipe(
       tap((authResult: NbAuthResult) => {
+        const expiresIn = parseInt(
+          authResult.getToken().getPayload().expires_in,
+          10
+        );
         this._token = authResult.getToken().getPayload().access_token;
+        const createdAt = authResult.getToken().getCreatedAt();
+        let mom_CreatedAt = moment(createdAt);
+
+        mom_CreatedAt.add(expiresIn, 'seconds');
+
+        this._tokenExpiry = mom_CreatedAt.toDate();
       }),
       mergeMap(res => this.getUserInfo())
     );
@@ -66,6 +88,11 @@ export class AuthService {
   }
 
   logout() {
-    this.nbAuthService.logout('google').subscribe(res => (this.user = null));
+    this.nbAuthService.logout('google').subscribe(res => {
+      this.user = null;
+      this._token = '';
+      this._tokenExpiry = undefined;
+      this.$isLoggedIn.next(false);
+    });
   }
 }

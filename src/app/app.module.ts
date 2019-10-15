@@ -29,6 +29,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginCallbackComponent } from './login-callback/login-callback.component';
 import { LoginComponent } from './login/login.component';
 import { LoginAuthGuard } from './login-auth-guard.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { LoginAuthGuard } from './login-auth-guard.service';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'cosmic' }),

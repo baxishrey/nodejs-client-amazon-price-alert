@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { User } from '../models/user';
 import { NbMenuService, NB_WINDOW } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
   userMenu = [{ title: this.logOutText }];
   constructor(
     private authService: AuthService,
-    private nbMenuService: NbMenuService
+    private nbMenuService: NbMenuService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(title => {
         if (title === this.logOutText) {
           this.authService.logout();
-          this.nbMenuService.navigateHome();
+          this.router.navigate(['/home']);
         }
       });
   }

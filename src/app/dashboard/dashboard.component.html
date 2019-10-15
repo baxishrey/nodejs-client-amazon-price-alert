@@ -1,34 +1,39 @@
 <div class="row">
   <div class="offset-md-3 col-md-6">
     <nb-card>
-      <nb-card-header>Using the Grid</nb-card-header>
+      <nb-card-header>Enter the details</nb-card-header>
       <nb-card-body>
-        <form>
+        <form (ngSubmit)="submit()">
           <div class="form-group row">
-            <label for="inputEmail1" class="label col-sm-3 col-form-label">
-              Email
+            <label for="url" class="label col-sm-3 col-form-label">
+              URL
             </label>
             <div class="col-sm-9">
               <input
-                type="email"
+                type="url"
                 nbInput
                 fullWidth
-                id="inputEmail1"
-                placeholder="Email"
+                id="url"
+                required
+                name="url"
+                [(ngModel)]="url"
               />
             </div>
           </div>
           <div class="form-group row">
             <label for="inputPassword2" class="label col-sm-3 col-form-label">
-              Password
+              Target price
             </label>
             <div class="col-sm-9">
               <input
-                type="password"
+                type="number"
+                min="1"
                 nbInput
                 fullWidth
-                id="inputPassword2"
-                placeholder="Password"
+                id="target-price"
+                required
+                name="target"
+                [(ngModel)]="targetPrice"
               />
             </div>
           </div>
@@ -36,7 +41,7 @@
           <div class="form-group row">
             <div class="offset-sm-3 col-sm-9">
               <button type="submit" nbButton status="primary">
-                Sign in
+                Submit
               </button>
             </div>
           </div>
