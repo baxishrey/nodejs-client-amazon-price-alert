@@ -1,0 +1,16 @@
+<div class="header-container">
+  <a class="logo" href="#">Price Drop Alert</a>
+</div>
+<div class="header-container">
+  <ng-container *ngIf="isLoggedIn; else loginLink">
+    <nb-user
+      [name]="user.name"
+      [picture]="user.picturePath"
+      [nbContextMenu]="userMenu"
+      nbContextMenuTag="auth-menu"
+    ></nb-user>
+  </ng-container>
+  <ng-template #loginLink>
+    <a [routerLink]="['/auth']" nbButton>Login/Signup</a>
+  </ng-template>
+</div>

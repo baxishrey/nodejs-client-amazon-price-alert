@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NbIconLibraries } from '@nebular/theme';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'client';
+  title = 'Price Drop Alert';
+
+  constructor(private iconLibrary: NbIconLibraries) {
+    this.iconLibrary.registerFontPack('font-awesome', {
+      iconClassPrefix: 'fa',
+      packClass: 'fa'
+    });
+    this.iconLibrary.setDefaultPack('font-awesome');
+  }
 }

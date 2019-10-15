@@ -1,54 +1,8 @@
 <nb-layout>
-  <nb-layout-header fixed>Header</nb-layout-header>
+  <nb-layout-header fixed>
+    <app-header></app-header>
+  </nb-layout-header>
   <nb-layout-column>
-    <div class="row">
-      <div class="offset-md-3 col-md-6">
-        <nb-card>
-          <nb-card-header>Using the Grid</nb-card-header>
-          <nb-card-body>
-            <form>
-              <div class="form-group row">
-                <label for="inputEmail1" class="label col-sm-3 col-form-label"
-                  >Email</label
-                >
-                <div class="col-sm-9">
-                  <input
-                    type="email"
-                    nbInput
-                    fullWidth
-                    id="inputEmail1"
-                    placeholder="Email"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label
-                  for="inputPassword2"
-                  class="label col-sm-3 col-form-label"
-                  >Password</label
-                >
-                <div class="col-sm-9">
-                  <input
-                    type="password"
-                    nbInput
-                    fullWidth
-                    id="inputPassword2"
-                    placeholder="Password"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="offset-sm-3 col-sm-9">
-                  <button type="submit" nbButton status="primary">
-                    Sign in
-                  </button>
-                </div>
-              </div>
-            </form>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
+    <router-outlet></router-outlet>
   </nb-layout-column>
 </nb-layout>
